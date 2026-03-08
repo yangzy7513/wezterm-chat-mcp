@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "virtual-chat"
+version = "0.3.0"
+description = "MCP tool for sending messages to WezTerm panes via SSE"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp",
+]
+
+[project.scripts]
+wezterm-chat = "server:main"
