@@ -9,7 +9,6 @@ WezTerm Chat MCP is a Python package that exposes a `send_message` tool via the 
 - Run different AI assistants in separate WezTerm panes
 - Enable cross-pane message exchange between agents
 - Build collaborative multi-agent workflows
-- Support various AI CLI tools: OpenCode, Gemini CLI, Claude Code, etc.
 
 ## Features
 
@@ -22,8 +21,8 @@ WezTerm Chat MCP is a Python package that exposes a `send_message` tool via the 
 ## Requirements
 
 - Python 3.10+
-- WezTerm terminal emulator
-- An MCP-compatible client (e.g., Claude Desktop, Cursor, etc.)
+- [WezTerm terminal emulator](https://wezterm.org/index.html)
+- [opencode](https://opencode.ai/) (recommend)
 
 ## Installation
 
@@ -49,11 +48,9 @@ wezterm-chat
 
 The server will listen on `http://localhost:8000` via SSE.
 
-### Claude Desktop
+### OpenCode
 
-Add the following to your Claude Desktop configuration file:
-
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+Add the following to your OpenCode configuration file:
 
 ```json
 {
@@ -65,9 +62,9 @@ Add the following to your Claude Desktop configuration file:
 }
 ```
 
-### Cursor
+### Claude Code
 
-Add the following to your Cursor settings (`~/.cursor/settings.json` or via UI):
+Add the following to your Claude Code configuration file:
 
 ```json
 {
