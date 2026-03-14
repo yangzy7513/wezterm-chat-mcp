@@ -7,7 +7,7 @@ from mcp.server.fastmcp import FastMCP
 
 logger = logging.getLogger(__name__)
 
-MAX_MESSAGE_LENGTH = 150
+MAX_MESSAGE_LENGTH = 800
 
 _ENV = os.environ.copy()
 _locks: dict[int, asyncio.Lock] = defaultdict(asyncio.Lock)
@@ -62,27 +62,24 @@ async def send_message(pane_id: int, sender: str, message: str) -> str:
         sender: The name of the sender.
         message: The message content.
     """
-    if not message or not sender:
-        return "Error: sender and message must not be empty."
     if len(message) > MAX_MESSAGE_LENGTH:
-        return f"Error: message too long (max {MAX_MESSAGE_LENGTH} chars)."
+        return f"Error: The message is too long (> {MAX_MESSAGE_LENGTH}), let the other party view it after streamlining or writing the file"
 
-    text = f"{sender}:{message}"
+    text = message.replace("@", "->").rstrip("\r\n")
+    text = f"{sender}:{text}"
     pane = str(pane_id)
     lock = _locks[pane_id]
 
     async with lock:
-        err = await _send_to_pane(pane, text.encode("utf-8"), timeout=10.0)
+        err = await _send_to_pane(pane, text.encode("utf-8"))
         if err:
-            return f"Error sending text: {err}"
+            return f"Error: {err}"
+        wait_time = max(1.0, len(text) / 100)
+        await asyncio.sleep(wait_time)
+        await _send_to_pane(pane, b"\r")
+        await asyncio.sleep(0.2)
 
-        await asyncio.sleep(0.15)
-
-        err = await _send_to_pane(pane, b"\r", timeout=3.0)
-        if err:
-            return f"Error sending Enter: {err}"
-
-    return "Message sent."
+    return "Message sent"
 
 
 def main():

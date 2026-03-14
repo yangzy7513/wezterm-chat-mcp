@@ -1,14 +1,15 @@
 # WezTerm Chat MCP
 
-A Model Context Protocol (MCP) server that enables cross-pane communication between different AI CLI tools running in WezTerm. This allows multiple AI assistants (such as OpenCode, Gemini CLI, Claude Code, etc.) running in separate panes to talk to each other, forming collaborative agent teams.
+A Model Context Protocol (MCP) server that enables cross-pane communication between different AI CLI tools running in WezTerm. This allows AI assistants (such as OpenCode, Gemini CLI, Claude Code, etc.) running in separate WezTerm panes to send commands and messages to each other, forming collaborative agent teams.
 
 ## Overview
 
-WezTerm Chat MCP is a Python package that exposes a `send_message` tool via the MCP protocol with SSE transport. Each AI CLI instance can run this MCP server in its own WezTerm pane, enabling inter-agent communication:
+WezTerm Chat MCP is a Python package that exposes a `send_message` tool via the MCP protocol with SSE transport. It leverages WezTerm's CLI `send-text` command to enable inter-agent communication between different AI CLI instances running in separate WezTerm panes:
 
 - Run different AI assistants in separate WezTerm panes
-- Enable cross-pane message exchange between agents
-- Build collaborative multi-agent workflows
+- Use WezTerm CLI's `send-text` command to send commands and messages between panes
+- Enable cross-pane command and message exchange between agents
+- Build collaborative multi-agent workflows where agents can coordinate tasks
 
 ## Features
 
@@ -90,7 +91,7 @@ Before sending messages, you need to identify the WezTerm pane ID. You can get i
 wezterm cli list-panes --format json
 ```
 
-Or by pressing `Ctrl+Shift+Alt+P` in WezTerm to display pane IDs.
+This will display all panes with their IDs in JSON format.
 
 ### Using the send_message Tool
 
@@ -99,6 +100,11 @@ Once configured, you can use the `send_message` tool in your AI assistant:
 ```
 send_message(pane_id=1, sender="Alice", message="Hello, how are you?")
 ```
+
+**Message Format:**
+- Messages are sent in the format: `{sender}:{message}`
+- After sending the message content, an Enter key is automatically sent to execute the command
+- Maximum message length: 150 characters
 
 **Parameters:**
 
