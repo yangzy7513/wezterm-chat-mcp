@@ -103,8 +103,7 @@ send_message(pane_id=1, sender="Alice", message="Hello, how are you?")
 
 **Message Format:**
 - Messages are sent in the format: `{sender}:{message}`
-- After sending the message content, an Enter key is automatically sent to execute the command
-- Maximum message length: 150 characters
+- Maximum message length: 800 characters
 
 **Parameters:**
 
@@ -112,10 +111,6 @@ send_message(pane_id=1, sender="Alice", message="Hello, how are you?")
 |-----------|------|-------------|
 | `pane_id` | integer | The WezTerm pane ID where the message will be sent |
 | `sender` | string | The name of the message sender |
-| `message` | string | The message content (max 150 characters) |
+| `message` | string | The message content (max 800 characters) |
 
 **Returns:** A status message indicating success or failure.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
